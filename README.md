@@ -18,6 +18,7 @@ Some commands I found useful during the assignment, particularly the directory n
 - `pwd` - shows current directory
 - `cd` - change directory 
 - `git add` - add new changes ready to be committed 
+- `ls` - list files in current directory
 ## Question 1 - Using Git and GitHub
 - ***Checking the status***
   - Command - `git status`
@@ -36,14 +37,36 @@ Some commands I found useful during the assignment, particularly the directory n
 
 
 - ***Adding files to a branch*** 
-  - Command - `git add <file-name>` 
+  - Creating files
+    - Command - `nano <file-name>` 
+    - ![Screenshot of README file creation](/images/nano-README.png)
+    - A new file called README.md is created and opened in nano text editor
+  - Staging file ready to be committed
+    - Command - `git add <file-name>` or `git add -A`
+    - ![Screenshot of adding commits with meaningful messages](/images/git-add.png)
+    - Checking the git status tells me that there are two files with changes yet to commit, and three png files added to the images folder of my repository. The command `git add -A` is used to stage all files ready to be committed rather than naming an individual file.
+
+
 - ***Adding commits with meaningful messages*** 
   - Commands -`git commit -m <message>`
   - ![Screenshot of adding commits with meaningful messages](/images/git-commit.png)
+   - ![Screenshot of adding commits with meaningful messages](/images/git-commit-github.png)
+   - Commits added to local repository with a message explaining the commit. The message is then displayed in the repository on the GitHub website.
+
+
 - ***Opening a pull request***
   - Done on GitHub website
+
+
 - ***Merging and deploying to main branch*** 
-  - Command - `git checkout main` then, `git merge <branch-name>` 
+  - Done on GitHub wesbite
+  - ![Screenshot of adding commits with meaningful messages](/images/git)
+
+
+- ***Create .gitignore***
+
+
+- ***Create requirements.txt***
 
 
 
