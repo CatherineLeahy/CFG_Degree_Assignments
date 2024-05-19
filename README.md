@@ -1,4 +1,4 @@
-# Assignment 1
+# Assignment 1 :rocket:
 ## Introduction
 Assignment 1 of the CFGDegree is centered around Git and GitHub operation. Git was installed and a GitHub account created before demonstrating various operations such as: 
 - Creating and using repositories
@@ -7,19 +7,19 @@ Assignment 1 of the CFGDegree is centered around Git and GitHub operation. Git w
 - Opening pull requests
 
 
-## About Me
+## About Me :woman_scientist: :arrow_right: :woman_technologist:
 I have been working in a Corrosion Laboratory in various roles for almost 7 years before joining the CFGDegree. My coding experience to date consists of some introductory matlab coding in my final year of university, and then a few MOOC Sprints through CFG. I'm super excited to be advancing my skills further on the CFGDegree.
-### My Cats
+### My Cats :cat2:
 ![A picture of Sashimi and Maki](/images/IMG_2565.jpeg)
 In my free time, I love spending time at home with my three cats. Above are my oldest two Sashimi and Maki.
-## Useful Commands
+## Useful Commands :writing_hand: 
 Some commands I found useful during the assignment, particularly the directory navigation commands. 
 - `git status` - shows status of current git branch
 - `pwd` - shows current directory
 - `cd` - change directory 
 - `git add` - add new changes ready to be committed 
 - `ls` - list files in current directory
-## Question 1 - Using Git and GitHub
+## Question 1 - Using Git and GitHub :desktop_computer:
 - ***Checking the status***
   - Command - `git status`
   - ![Screenshot of checking the git status in terminal](/images/git-status.png)
@@ -56,17 +56,27 @@ Some commands I found useful during the assignment, particularly the directory n
 
 - ***Opening a pull request***
   - Done on GitHub website
+  - ![Screenshot of adding commits with meaningful messages](/images/pull-request.png)
+  - ![Screenshot of adding commits with meaningful messages](/images/open-pull-request.png)
+  - ![Screenshot of adding commits with meaningful messages](/images/completed-pull-request.png)
+  - A pull request is opened on the github website as shown in the screenshots. 
 
 
 - ***Merging and deploying to main branch*** 
   - Done on GitHub wesbite
-  - ![Screenshot of adding commits with meaningful messages](/images/git)
+  - ![Screenshot of adding commits with meaningful messages](/images/merge-deploy.png)
+  - Commits from the further-updates branch are merged into the main branch of the repo.
 
 
 - ***Create .gitignore***
+  - A hidden file was created on PyCharm called .gitignore, containing a list of files that should be ignored when choosing what to commit. I added:
+    - .idea folder - this contains PyCharm configuration files that I didn't need to commit
+    - .DS_Store files - these are MacOS metadata files that I didn't need to commit
 
 
 - ***Create requirements.txt***
+  - Command - `touch <file-name>`
+  - The `touch` command creates a generic file without opening in any text editor like the `nano` command. My requirements.txt file is empty, however these files are normally used to store packages and/or libraries required for the project.
 
 
 
