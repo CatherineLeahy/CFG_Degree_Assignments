@@ -1,5 +1,5 @@
+from datetime import datetime
 import pprint
-
 import requests
 
 API_ID = 'ae7b3fe0'
@@ -10,7 +10,8 @@ def get_recipe(ingredients, api_id, api_key):
     if not ingredients:
         url = 'https://api.edamam.com/api/recipes/v2?type=public&app_id={}&app_key={}&random=true&mealType=Dinner'.format(api_id, api_key)
     else:
-        url = 'https://api.edamam.com/api/recipes/v2?type=public&q={}&app_id={}&app_key=%20{}&random=true&mealType=Dinner'.format(ingredients, api_id, api_key)
+        formatted_user_ingredients = ",".join(ingredients)
+        url = 'https://api.edamam.com/api/recipes/v2?type=public&q={}&app_id={}&app_key=%20{}&random=true&mealType=Dinner'.format(formatted_user_ingredients, api_id, api_key)
     print(url)
     response = requests.get(url)
     data = response.json()
@@ -30,11 +31,11 @@ def ask_ingredients():
     else:
         user_ingredients.append(first_ingredients_input)
     next_ingredients_input = input("Please enter your next ingredient. Leave blank and enter once all ingredients"
-                                   " inputted: ")
+                                   " inputted: ").strip()
     while next_ingredients_input != '':
         user_ingredients.append(next_ingredients_input)
         next_ingredients_input = input("Please enter your next ingredient. Leave blank and enter once all ingredients "
-                                       "inputted: ")
+                                       "inputted: ").strip()
     return user_ingredients
 
 
@@ -44,8 +45,12 @@ def main():
           " recipe. Bon apetite!.")
     ingredients = ask_ingredients()
     print(ingredients)
+    time_now = datetime.now()
     recipe = get_recipe(ingredients, API_ID, API_KEY)
     pprint.pprint(recipe)
+    elapsed_time = (datetime.now() - time_now).microseconds/1000
+    print ("It took us {}ms to find a recipe for your dinner tonight!".format(elapsed_time))
+
 
 if __name__ == "__main__":
     main()
