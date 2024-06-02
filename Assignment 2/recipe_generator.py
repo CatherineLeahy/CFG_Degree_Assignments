@@ -50,6 +50,9 @@ def main():
     pprint.pprint(recipe)
     elapsed_time = (datetime.now() - time_now).microseconds/1000
     print ("It took us {}ms to find a recipe for your dinner tonight!".format(elapsed_time))
+    recipe_title = recipe['label']
+    with open('recipe_output.md', 'w') as file:
+        file.writelines('## {}'.format(recipe_title))
 
 
 if __name__ == "__main__":
