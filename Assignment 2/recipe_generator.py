@@ -36,21 +36,12 @@ def get_recipe(ingredients, api_id, api_key):
 # method for asking user for ingredient inputs
 def ask_ingredients():
     user_ingredients = []
-    first_ingredients_input = input("Please enter your first ingredient. Leave blank for a randomised recipe: ").strip()
-    # if no ingredient is inputted, an empty list (user_ingredients) is returned
-    if first_ingredients_input == '':
-        return user_ingredients
-    # if a first ingredient is inputted, the user is asked to input the next ingredient
-    else:
-        # user ingredient list appended to add each ingredient inputted by user
-        user_ingredients.append(first_ingredients_input)
-    next_ingredients_input = input("Please enter your next ingredient. Leave blank and enter once all ingredients"
-                                   " inputted: ").strip()
+    ingredients_input = input("Please enter your first ingredient. Leave blank for a randomised recipe: ").strip()
     # whilst an ingredient is inputted, the user will continue to be asked to input the next ingredient
-    while next_ingredients_input != '':
+    while ingredients_input != '':
         # user ingredient list appended to add each ingredient inputted by user
-        user_ingredients.append(next_ingredients_input)
-        next_ingredients_input = input("Please enter your next ingredient. Leave blank and enter once all ingredients "
+        user_ingredients.append(ingredients_input)
+        ingredients_input = input("Please enter your next ingredient. Leave blank and enter once all ingredients "
                                        "inputted: ").strip()
     # when the user stops inputting ingredients, return the list of user ingredients
     return user_ingredients
