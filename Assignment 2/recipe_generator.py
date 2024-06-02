@@ -39,20 +39,30 @@ def ask_ingredients():
     return user_ingredients
 
 
+def write_to_file(recipe, elapsed_time):
+    recipe_title = recipe['label']
+    recipe_ingredients = recipe['ingredientLines']
+    url = recipe['url']
+    recipe_instructions_url = ("See full cooking instructions on: {}".format(url))
+    timer = ("It took us {}ms to find a recipe for your dinner tonight!".format(elapsed_time))
+    with open('recipe_output.md', 'w') as file:
+        file.writelines('# :plate_with_cutlery: {} :knife: \n\n{} \n\n{} \n\n{}'.format(recipe_title, recipe_ingredients, recipe_instructions_url, timer))
+
+
 
 def main():
     print("Hello! Allow Edamam's API to decide what's for dinner! Tell us what's in your fridge, and we'll provide the"
           " recipe. Bon apetite!.")
     ingredients = ask_ingredients()
-    print(ingredients)
+    print(ingredients)  # delete at end
     time_now = datetime.now()
     recipe = get_recipe(ingredients, API_ID, API_KEY)
-    pprint.pprint(recipe)
+    pprint.pprint(recipe)  # delete at end
     elapsed_time = (datetime.now() - time_now).microseconds/1000
-    print ("It took us {}ms to find a recipe for your dinner tonight!".format(elapsed_time))
-    recipe_title = recipe['label']
-    with open('recipe_output.md', 'w') as file:
-        file.writelines('## {}'.format(recipe_title))
+    write_to_file(recipe, elapsed_time)
+
+
+
 
 
 if __name__ == "__main__":
