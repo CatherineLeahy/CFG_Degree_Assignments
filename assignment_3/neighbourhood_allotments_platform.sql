@@ -4,8 +4,8 @@ USE neighbourhood_allotments;
 
 -- Create growing_plots table
 CREATE TABLE IF NOT EXISTS growing_plots (
-	plot_id CHAR(3) NOT NULL,
-    location CHAR(2) NOT NULL,
+	plot_id CHAR(3) NOT NULL UNIQUE,
+    location VARCHAR(2) NOT NULL UNIQUE,
     size FLOAT NOT NULL, -- how to add units of m2? 
     soil_type VARCHAR(8) NOT NULL );
 
@@ -36,6 +36,7 @@ VALUES
 ('GP7', 'SW', '2.57','alkaline'),
 ('GP8', 'W', '2.74','alkaline'),
 ('GP9', 'NW', '2.88','acidic');
+
 
 
 

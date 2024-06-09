@@ -3,6 +3,18 @@
 ## Introduction :herb:
 The goal of this assignment was to design and implement a database that solves a problem. The scenario chosen is a 
 neighbourhood allotment that requires a platform to manage: 
-- Plant inventory
-- Shared growing plots
-- Community events scheduling
+- :seedling:Plant inventory
+- :handshake:Shared growing plots
+- :calendar:Community events scheduling
+
+## Neighbourhood Allotment Platform :computer:
+### Scenario
+The neighbourhood currently relies on manual records and email chains for its allotment administration, 
+resulting in poor coordination and difficulty planning events. The neighbourhood needs to be able to: 
+- :memo:Schedule and plan events according to how many people are due to attend  
+- ::Record when a plan has been watered, fertilised, pruned, or harvested
+- ::Monitor growing plot usage and search for available plots
+- ::
+
+### Database
+
