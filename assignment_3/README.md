@@ -12,8 +12,8 @@ neighbourhood allotment that requires a platform to manage:
 The neighbourhood currently relies on manual records and email chains for its allotment administration, 
 resulting in poor coordination and difficulty planning events. The neighbourhood needs to be able to: 
 - :memo:Schedule and plan events according to how many people are due to attend  
-- ::Record when a plan has been watered, fertilised, pruned, or harvested
-- ::Monitor growing plot usage and search for available plots
+- :droplet:Record when a plant has been watered, fertilised, pruned, or harvested
+- :mag_right:Monitor growing plot usage and search for available plots
 - ::
 
 ### Database
