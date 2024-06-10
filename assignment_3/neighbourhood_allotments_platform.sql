@@ -11,14 +11,20 @@ CREATE TABLE IF NOT EXISTS growing_plots (
 
 -- Create neighbours table
 CREATE TABLE IF NOT EXISTS neighbours (
-	neighbour_ID VARCHAR(3) PRIMARY KEY,
+	neighbour_id VARCHAR(3) PRIMARY KEY,
     forename VARCHAR (50) NOT NULL,
     surname VARCHAR (50) NOT NULL,
     email VARCHAR (50) NOT NULL UNIQUE,
     mobile_number VARCHAR(15) NOT NULL UNIQUE ); -- allows for UK mobile numbers to be entered with or without country code and spaces
 
 -- Create plants table
-
+CREATE TABLE IF NOT EXISTS plants (
+	plant_id VARCHAR(3) PRIMARY KEY,
+    plot_id CHAR(3) NOT NULL, -- foreign key
+    species VARCHAR (50) NOT NULL,
+    planting_date DATE NOT NULL,
+    growth_stage VARCHAR(15) NOT NULL,
+    FOREIGN KEY(plot_id) REFERENCES growing_plots(plot_id) );
 
 -- Create plant_care table
 
@@ -42,9 +48,9 @@ VALUES
 ('GP8', 'W', 2.74,'alkaline'),
 ('GP9', 'NW', 2.88,'acidic');
 
--- Insert example data sets into neighbours (random names, emails and phone numbers generated on chatGPT)
+-- Insert example data sets into neighbours
 INSERT INTO neighbours
-(neighbour_ID,forename,surname,email,mobile_number)
+(neighbour_id,forename,surname,email,mobile_number)
 VALUES
 ('N1','Alice','Johnson','alice.johnson@example.com','+44 7700 900001'),
 ('N2','Bob','Smith','bob.smith@example.com','07700900002'), 
@@ -57,6 +63,27 @@ VALUES
 ('N9','Ivy','Anderson','ivy.anderson@example.com','+44 7700 900009'), 
 ('N10','Jack','Thompson','jack.thompson@example.com','+44 7700 900010'); 
 
+-- Insert example data sets into plants 
+INSERT INTO plants
+(plant_id,plot_id,species,planting_date,growth_stage)
+VALUES
+('P1','GP6','sweet pepper','2024-04-15','growing'),
+('P2','GP9','kale','2024-04-07','mature'),
+('P3','GP7','rocket','2024-04-01','mature'),
+('P4','GP1','lavendar','2024-05-07','flowering'),
+('P5','GP6','tomato','2024-05-15','flowering'),
+('P6','GP7','basil','2024-05-01','mature'),
+('P7','GP1','dwarf bean','2024-03-28','flowering'),
+('P8','GP2','potato','2024-03-28','growing'),
+('P9','GP3','carrot','2024-04-21','growing'),
+('P10','GP3','beetroot','2024-04-01','growing');
+
+    
 -- First and last names of all neighbours with the phone number 07700900002
 SELECT forename, surname FROM neighbours WHERE mobile_number = '07700900002';
 SELECT * FROM neighbours
+
+-- testing if dropping existing tables fixes error
+DROP TABLE IF EXISTS plants;
+DROP TABLE IF EXISTS neighbours;
+DROP TABLE IF EXISTS growing_plots;
