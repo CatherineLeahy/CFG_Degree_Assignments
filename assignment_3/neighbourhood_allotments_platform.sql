@@ -10,7 +10,12 @@ CREATE TABLE IF NOT EXISTS growing_plots (
     soil_type VARCHAR(8) NOT NULL );
 
 -- Create neighbours table
-
+CREATE TABLE IF NOT EXISTS neighbours (
+	neighbour_ID VARCHAR(3) NOT NULL UNIQUE,
+    forename VARCHAR (50) NOT NULL,
+    surname VARCHAR (50) NOT NULL,
+    email VARCHAR (50) NOT NULL UNIQUE,
+    mobile_number VARCHAR(15) NOT NULL UNIQUE ); -- allows for UK mobile numbers to be entered with or without country code and spaces
 
 -- Create plants table
 
@@ -37,8 +42,17 @@ VALUES
 ('GP8', 'W', '2.74','alkaline'),
 ('GP9', 'NW', '2.88','acidic');
 
-
-
-
-
-
+-- Insert example data sets into neighbours (random names, emails and phone numbers generated on chatGPT)
+INSERT INTO neighbours
+(neighbour_ID,forename,surname,email,mobile_number)
+VALUES
+('N1','Alice','Johnson','alice.johnson@example.com','+44 7700 900001'),
+('N2','Bob','Smith','bob.smith@example.com','07700900002'), 
+('N3','Carol','Williams','carol.williams@example.com','+447700900003'), 
+('N4','David','Brown','david.brown@example.com','+44 7700 900004'), 
+('N5','Eve','Davies','eve.davies@example.com','07700900005'), 
+('N6','Frank','Miller','frank.miller@example.com','07700900006'), 
+('N7','Grace','Wilson','grace.wilson@example.com','+447700900007'),
+('N8','Hank','Martinez','hank.martinez@example.com','+447700900008'), 
+('N9','Ivy','Anderson','ivy.anderson@example.com','+44 7700 900009'), 
+('N10','Jack','Thompson','jack.thompson@example.com','+44 7700 900010'); 
