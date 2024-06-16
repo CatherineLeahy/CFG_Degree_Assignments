@@ -206,6 +206,7 @@ BEGIN
 END //
 DELIMITER ;
 
+-- generating plant care report using stored procedure created above
 CALL generate_plant_care_report();
 
 -- Viewing tables
