@@ -124,7 +124,8 @@ ALTER TABLE neighbours
 DROP COLUMN mobile_number;
 
 -- 5x queries to retrieve data
-
+-- First and last names of all neighbours with the phone number 07700900002
+SELECT forename, surname FROM neighbours WHERE mobile_number = '07700900006';
 
 -- 1x query to delete data 
 -- David Brown has moved out of the neighbourhood so his information should be deleted
@@ -134,15 +135,41 @@ DELETE FROM neighbours
 WHERE neighbour_id = 'N4'; -- Deleting David Brown's data from DB using his neighbour_ID
 
 -- 2x aggregate functions
+-- Calculate the average size of the growing plots on the allotment
+SELECT AVG(size) AS average_growing_plot_size
+FROM growing_plots;
+-- Which plots are currently unoccupied?
+SELECT gp.plot_id, 
+COUNT(p.plot_id) AS no_plants -- counts no plants in each plot
+FROM growing_plots gp -- primary table
+LEFT JOIN plants p ON gp.plot_id = p.plot_id -- joins plants and growing_plots tables by plot_id
+GROUP BY gp.plot_id -- groups results
+HAVING no_plants = 0; -- filters grouped results to only show unoccupied growing plots
 
 -- 2x joins
 
 -- 2x additional in-built functions
-
+-- Combine neighbours forenames and surnames
+SELECT CONCAT(forename,' ',surname) AS full_name
+FROM neighbours
+ORDER BY full_name ASC;
 
 -- data sorting for majority of queries with ORDER BY
 
 -- create and use one stored procedure or function to achieve a goal
+-- Procedure to generate a complete plant care report
+DELIMITER //
+CREATE PROCEDURE generate_plant_care_report()
+BEGIN
+    SELECT p.species, n.forename, n.surname, pc.care_date, pc.activity_type
+    FROM plant_care pc
+    INNER JOIN plants p ON pc.plant_id = p.plant_id
+    INNER JOIN neighbours n ON pc.neighbour_id = n.neighbour_id
+    ORDER BY pc.care_date DESC;
+END //
+DELIMITER ;
+
+CALL generate_plant_care_report();
 
 -- normalise the DB 
 
@@ -152,8 +179,7 @@ SELECT * FROM neighbours;
 SELECT * FROM plants;
 SELECT * FROM plant_care;
  
--- First and last names of all neighbours with the phone number 07700900002
-SELECT forename, surname FROM neighbours WHERE mobile_number = '07700900002';
+
 
 
 
