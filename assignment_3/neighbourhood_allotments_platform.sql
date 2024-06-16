@@ -1,33 +1,45 @@
+
 -- Create database
 CREATE DATABASE IF NOT EXISTS neighbourhood_allotments;
 USE neighbourhood_allotments;
 
 -- Create growing_plots table
 CREATE TABLE IF NOT EXISTS growing_plots (
-	plot_id CHAR(3) PRIMARY KEY, -- when adding PRIMARY KEY, is it still good practice to include NOT NULL?
+	plot_id CHAR(3), -- when adding PRIMARY KEY, is it still good practice to include NOT NULL?
     location VARCHAR(2) NOT NULL UNIQUE,
     size DECIMAL(5,2) NOT NULL, -- how to add units of m2? 5 characters total, accurate to 2 d.p
-    soil_type VARCHAR(8) NOT NULL );
+    soil_type VARCHAR(8) NOT NULL,
+    PRIMARY KEY (plot_id) );
 
 -- Create neighbours table
 CREATE TABLE IF NOT EXISTS neighbours (
-	neighbour_id VARCHAR(3) PRIMARY KEY,
+	neighbour_id VARCHAR(3),
     forename VARCHAR (50) NOT NULL,
     surname VARCHAR (50) NOT NULL,
     email VARCHAR (50) NOT NULL UNIQUE,
-    mobile_number VARCHAR(15) NOT NULL UNIQUE ); -- allows for UK mobile numbers to be entered with or without country code and spaces
-
+    mobile_number VARCHAR(15) NOT NULL UNIQUE, -- allows for UK mobile numbers to be entered with or without country code and spaces
+	PRIMARY KEY (neighbour_id) );
+    
 -- Create plants table
 CREATE TABLE IF NOT EXISTS plants (
-	plant_id VARCHAR(3) PRIMARY KEY,
+	plant_id VARCHAR(3),
     plot_id CHAR(3) NOT NULL, -- foreign key
     species VARCHAR (50) NOT NULL,
     planting_date DATE NOT NULL,
     growth_stage VARCHAR(15) NOT NULL,
-    FOREIGN KEY(plot_id) REFERENCES growing_plots(plot_id) );
+    PRIMARY KEY (plant_id),
+    FOREIGN KEY (plot_id) REFERENCES growing_plots (plot_id) );
 
 -- Create plant_care table
-
+CREATE TABLE IF NOT EXISTS plant_care (
+	care_id VARCHAR(3),
+    plant_id VARCHAR(3), -- foreign key
+    neighbour_id VARCHAR(3), -- foreign key
+    care_date DATE,
+    activity_type VARCHAR(25),
+    PRIMARY KEY (care_id),
+    FOREIGN KEY (plant_id) REFERENCES plants (plant_id),
+    FOREIGN KEY (neighbour_id) REFERENCEs neighbours (neighbour_id) );
 
 -- Create events table
 
@@ -78,12 +90,56 @@ VALUES
 ('P9','GP3','carrot','2024-04-21','growing'),
 ('P10','GP3','beetroot','2024-04-01','growing');
 
-    
+-- Insert example data sets into plant_care
+INSERT INTO plant_care
+(care_id,plant_id,neighbour_id,care_date,activity_type)
+VALUES
+('C1','P2','N7','2024-06-01','harvested'),
+('C2','P5','N3','2024-06-13','fertilised'),
+('C3','P8','N6','2024-05-31','watered'),
+('C4','P7','N5','2024-06-09','harvested'),
+('C5','P6','N4','2024-06-12','harvested'),
+('C6','P10','N8','2024-05-23','watered'),
+('C7','P4','N3','2024-05-14','fertilised'),
+('C8','P9','N1','2024-06-04','watered'),
+('C9','P1','N8','2024-06-10','fertilised'),
+('C10','P3','N7','2024-06-01','harvested');
+ 
+-- 3x queries to insert data
+
+-- 5x queries to retrieve data
+
+-- 1x query to delete data (David Brown has moved out of the neighbourhood so his information should be deleted)
+DELETE FROM neighbours 
+WHERE forename = 'David' AND surname = 'Brown';
+
+
+-- 2x aggregate functions
+
+-- 2x joins
+
+-- 2x additional in-built functions
+
+-- data sorting for majority of queries with ORDER BY
+
+-- create and use one stored procedure or function to achieve a goal
+
+-- normalise the DB 
+
+-- Checking above tables for errors
+SELECT * FROM growing_plots;
+SELECT * FROM neighbours;
+SELECT * FROM plants;
+SELECT * FROM plant_care;
+ 
 -- First and last names of all neighbours with the phone number 07700900002
 SELECT forename, surname FROM neighbours WHERE mobile_number = '07700900002';
-SELECT * FROM neighbours
 
 -- testing if dropping existing tables fixes error
+DROP TABLE IF EXISTS plant_care;
 DROP TABLE IF EXISTS plants;
 DROP TABLE IF EXISTS neighbours;
 DROP TABLE IF EXISTS growing_plots;
+
+
+
