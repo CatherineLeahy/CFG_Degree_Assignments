@@ -3,6 +3,11 @@
 CREATE DATABASE IF NOT EXISTS neighbourhood_allotments;
 USE neighbourhood_allotments;
 
+DROP TABLE IF EXISTS plant_care;
+DROP TABLE IF EXISTS plants;
+DROP TABLE IF EXISTS neighbours;
+DROP TABLE IF EXISTS growing_plots;
+
 -- Create growing_plots table
 CREATE TABLE IF NOT EXISTS growing_plots (
 	plot_id CHAR(3), -- when adding PRIMARY KEY, is it still good practice to include NOT NULL?
@@ -17,7 +22,7 @@ CREATE TABLE IF NOT EXISTS neighbours (
     forename VARCHAR (50) NOT NULL,
     surname VARCHAR (50) NOT NULL,
     email VARCHAR (50) NOT NULL UNIQUE,
-    mobile_number VARCHAR(15) NOT NULL UNIQUE, -- allows for UK mobile numbers to be entered with or without country code and spaces
+    mobile_number VARCHAR(15) NOT NULL UNIQUE, -- allows for UK mobile numbers to be entered with or without country code and spaces. Should this be integer or char instead?
 	PRIMARY KEY (neighbour_id) );
     
 -- Create plants table
@@ -39,12 +44,7 @@ CREATE TABLE IF NOT EXISTS plant_care (
     activity_type VARCHAR(25),
     PRIMARY KEY (care_id),
     FOREIGN KEY (plant_id) REFERENCES plants (plant_id),
-    FOREIGN KEY (neighbour_id) REFERENCEs neighbours (neighbour_id) );
-
--- Create events table
-
-
--- Create events_rsvp table
+    FOREIGN KEY (neighbour_id) REFERENCES neighbours (neighbour_id) ON DELETE CASCADE ); -- ON DELETE CASCADE ensures that when a neighbour_id is deleted from the parent table (neighbours), it is also deleted in the child table (plant_care)
 
 -- Insert example data sets into growing_plots
 INSERT INTO growing_plots 
@@ -104,15 +104,34 @@ VALUES
 ('C8','P9','N1','2024-06-04','watered'),
 ('C9','P1','N8','2024-06-10','fertilised'),
 ('C10','P3','N7','2024-06-01','harvested');
- 
+
 -- 3x queries to insert data
+-- The tomato plants are now fruiting so updating growth_stage
+UPDATE plants
+SET growth_stage = 'fruiting'
+WHERE plant_id = 'P5'; 
+-- Grace Wilson got married so her surname is now Robinson
+UPDATE neighbours
+SET surname = 'Robinson',
+	email = 'grace.robinson@example.com'
+WHERE neighbour_id = 'N7';
+-- A acidic soil treatment was applied to the Eastern growing plot
+UPDATE growing_plots
+SET soil_type = REPLACE(soil_type, 'alkaline','acidic')
+WHERE plot_id = 'GP4'; 
+-- The neighbourhood decided they only needed one form of contact details (email) in the database
+ALTER TABLE neighbours
+DROP COLUMN mobile_number;
 
 -- 5x queries to retrieve data
 
--- 1x query to delete data (David Brown has moved out of the neighbourhood so his information should be deleted)
-DELETE FROM neighbours 
-WHERE forename = 'David' AND surname = 'Brown';
 
+-- 1x query to delete data 
+-- David Brown has moved out of the neighbourhood so his information should be deleted
+SELECT neighbour_id FROM neighbours 
+WHERE forename = 'David' AND surname = 'Brown'; -- Finding David Brown's neighbour_ID
+DELETE FROM neighbours 
+WHERE neighbour_id = 'N4'; -- Deleting David Brown's data from DB using his neighbour_ID
 
 -- 2x aggregate functions
 
@@ -120,13 +139,14 @@ WHERE forename = 'David' AND surname = 'Brown';
 
 -- 2x additional in-built functions
 
+
 -- data sorting for majority of queries with ORDER BY
 
 -- create and use one stored procedure or function to achieve a goal
 
 -- normalise the DB 
 
--- Checking above tables for errors
+-- Viewing tables
 SELECT * FROM growing_plots;
 SELECT * FROM neighbours;
 SELECT * FROM plants;
@@ -135,11 +155,6 @@ SELECT * FROM plant_care;
 -- First and last names of all neighbours with the phone number 07700900002
 SELECT forename, surname FROM neighbours WHERE mobile_number = '07700900002';
 
--- testing if dropping existing tables fixes error
-DROP TABLE IF EXISTS plant_care;
-DROP TABLE IF EXISTS plants;
-DROP TABLE IF EXISTS neighbours;
-DROP TABLE IF EXISTS growing_plots;
 
 
 
