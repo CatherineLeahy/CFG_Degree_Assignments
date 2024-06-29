@@ -1,0 +1,17 @@
+from flask import Flask, jsonify
+from db_utils import get_chamber_infos
+
+app = Flask(__name__)
+
+
+@app.route('/chamber/<id>')
+def get_chamber_info(id):
+    chamber_infos = get_chamber_infos()
+    for chamber_info in chamber_infos:
+        if chamber_info['id'] == id:
+            return jsonify(chamber_info)
+    return jsonify({})
+
+
+if __name__ == '__main__':
+    app.run(debug=True, port=5001)
