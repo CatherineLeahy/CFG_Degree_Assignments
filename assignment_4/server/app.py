@@ -1,5 +1,6 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from db_utils import get_chamber_specs
+from db_utils import get_chamber_availability
 
 app = Flask(__name__)
 
@@ -21,5 +22,15 @@ def get_chamber_specification(id):
 #     return jsonify({})
 
 
+@app.route('/availability', methods=['GET'])
+def get_availability():
+    sample_quantity = input("How many samples you would like to test in the chamber? ").strip()
+    duration = input("What is the test duration in days? ")
+    environment = input("Do you require an acidic or neutral environment? ")
+
+    available_chambers = get_chamber_availability(sample_quantity,duration,environment)
+    return jsonify({})
+
+
 if __name__ == '__main__':
-    app.run(debug=True, port=5001)
+    app.run(debug=True, port=5000)

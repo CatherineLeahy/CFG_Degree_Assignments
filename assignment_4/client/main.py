@@ -3,7 +3,7 @@ import requests
 
 def get_chamber_specification(id):
     result = requests.get(
-        'http://127.0.0.1:5001/chamber/{}'.format(id),
+        'http://127.0.0.1:5000/chamber/{}'.format(id),
         headers={'content-type': 'application/json'}
     )
     return result.json()
@@ -24,7 +24,7 @@ def display_chamber_specs(chamber_specification):
 
 def run():
     print('############################')
-    print('Hello, welcome to our lab')
+    print('Hello, welcome to the Corrosion Lab scheduling assistant!')
     print('############################')
     print()
     id = input('What chamber do you want to view info of: ')
