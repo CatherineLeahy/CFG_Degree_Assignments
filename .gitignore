@@ -2,3 +2,4 @@
 .DS_Store
 assignment_2/recipe_output/
 .venv/
+__pycache__/
